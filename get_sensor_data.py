@@ -11,9 +11,6 @@ def gps_capture(x=10):
 	Restarts the GPS, and saves the event log csv file one line at a 
 	time so that it still works if the power is cut.'''
 	
-	args = sys.argv
-	x = int(args[1])
-	
 	os.system("sudo killall gpsd")
 	os.system("sudo gpsd /dev/ttyUSB0 -F /var/run/gpsd.sock")
 		
