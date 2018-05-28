@@ -56,14 +56,13 @@ def gps_capture():
 					print 'Lat:', lat
 					print 'Lon:', lon
 					row =	[
-								report.time, 
-								lat, 
-								lon, 
-								alt, 
-								speed,
-								track,
-								j_id
-							]
+                                                    report.time, 
+                                                    lat, 
+                                                    lon, 
+                                                    alt, 
+                                                    speed,
+                                                    track
+                                                ]
 					with open('Session.csv', 'a+') as f:
 						csv_w = csv.writer(f)
 						csv_w.writerow(row)

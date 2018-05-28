@@ -83,6 +83,8 @@ def get_sql():
     ''', 
     'get_events':
     "SELECT id, Time, Lat, Lon FROM Event", 
+    'get_journey_events':
+    "SELECT id, Time, Lat, Lon FROM Event WHERE Journey_ID = '{j}'", 
     'get_new_events':
     '''SELECT id, Time, Lat, Lon FROM Event
     WHERE Journey_ID IS NULL''', 

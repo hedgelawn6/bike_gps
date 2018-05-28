@@ -7,23 +7,27 @@ def map_events(cur, sql_d):
     '''Creates a shapefile with all of the events in db'''
 
     print '::Events shapefile...'
-    cur.execute(sql_d['get_events'])
-    hdr = [d[0] for d in cur.description]
-    ev_l = [{k:v for k, v in zip(hdr, row)} for row in cur.fetchall()]
+    cur.execute("SELECT Journey_ID FROM Event GROUP BY Journey_ID")
+    journeys = [r[0] for r in cur.fetchall()]
 
-    f_shp = shapefile.Writer(shapefile.POINT)
-    f_shp.autoBalance = 1
-    f_shp.field('Time', 'C')
+    for j in journeys:
+        cur.execute(sql_d['get_journey_events'].format(j=j))
+        hdr = [d[0] for d in cur.description]
+        ev_l = [{k:v for k, v in zip(hdr, row)} for row in cur.fetchall()]
 
-    for ev in ev_l:
-        ev_id = ev['id']
-        time = ev['Time']
-        lat = ev['Lat']
-        lon = ev['Lon']
-        f_shp.point(float(lon), float(lat))
-        f_shp.record(time, ev_id)
+        f_shp = shapefile.Writer(shapefile.POINT)
+        f_shp.autoBalance = 1
+        f_shp.field('Time', 'C')
 
-    f_shp.save('01_all_events')
+        for ev in ev_l:
+            ev_id = ev['id']
+            time = ev['Time']
+            lat = ev['Lat']
+            lon = ev['Lon']
+            f_shp.point(float(lon), float(lat))
+            f_shp.record(time, ev_id)
+
+        f_shp.save('{j}_events'.format(j=j))
 
 #Maps Stops
 def map_stops(cur, sql_d):
@@ -46,8 +50,9 @@ def map_stops(cur, sql_d):
         lon = stop['Lon']
         dur = stop['Duration']
         name = stop['Loc_name']
-        f_shp.point(float(lon), float(lat))
-        f_shp.record(start_time, dur, name, stop_id)
+        if lat != None and lon != None:
+            f_shp.point(float(lon), float(lat))
+            f_shp.record(start_time, dur, name, stop_id)
 
     f_shp.save('02_stops')
 
