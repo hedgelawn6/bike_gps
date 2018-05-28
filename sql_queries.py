@@ -25,6 +25,7 @@ def get_sql():
             Last_ev INTEGER, 
             First_loc INTEGER, 
             Last_loc INTEGER,
+            Duration TEXT,
             FOREIGN KEY(First_ev) REFERENCES Event(id)
             FOREIGN KEY(Last_ev) REFERENCES Event(id)
             FOREIGN KEY(First_loc) REFERENCES Location(id)

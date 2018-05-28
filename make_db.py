@@ -55,7 +55,7 @@ def pop_journey(con, t_thr, d_thr):
     sql_d = get_sql()
 
     #Gets a list of event dicts from the db
-    cur.execute(sql_d['new_get_events'])
+    cur.execute(sql_d['get_new_events'])
     hdr = [d[0] for d in cur.description]
     ev_l = [{k:v for k, v in zip(hdr, row)} for row in cur.fetchall()]
     cur.execute("SELECT MAX(id) FROM Journey")
@@ -166,7 +166,6 @@ def pop_stops(con, j_d, loc_d, t_thr, d_thr):
 
     #Gets locations for the stops. Updates loc_d with new locations.
     for s in stop_l:
-        print s
         for l in loc_d:
             if get_dist(s['Loc'], loc_d[l]) < d_thr:
                 s['Loc'] = loc_d[l]
@@ -215,5 +214,3 @@ def make_db(src_csv='Session.csv', db_name='Session_db.db'):
     pop_stops(con, j_d, loc_d, t_thr, d_thr)
     pop_locs(con, loc_d)
     return
-
-make_db()

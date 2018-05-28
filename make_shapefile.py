@@ -16,7 +16,6 @@ def map_events(cur, sql_d):
     f_shp.field('Time', 'C')
 
     for ev in ev_l:
-        print ev
         ev_id = ev['id']
         time = ev['Time']
         lat = ev['Lat']
@@ -66,6 +65,3 @@ def map_db(db='Session_db.db'):
 
     cur.close()
     con.close()
-
-map_db()
-

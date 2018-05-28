@@ -24,5 +24,3 @@ def rev_geocode_locs(db='Session_db.db'):
     cur.close()
     con.commit()
     con.close()
-
-rev_geocode_locs()
