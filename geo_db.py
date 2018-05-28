@@ -12,8 +12,6 @@ def get_keys():
 
     return key_d
 
-#k = "hteEKYs3TAxzzQMsPNqxg4G80iT3XwYy"
-
 #Updates location table with place names
 def rev_geocode_locs(db='Session_db.db'):
     '''Takes 1 argument - db - path to sqlite db.
